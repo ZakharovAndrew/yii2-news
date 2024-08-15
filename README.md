@@ -5,6 +5,8 @@
 [![License](https://poser.pugx.org/zakharov-andrew/yii2-news/license)](https://packagist.org/packages/zakharov-andrew/yii2-news)
 [![Yii2](https://img.shields.io/badge/Powered_by-Yii_Framework-green.svg?style=flat)](http://www.yiiframework.com/)
 
+The Yii2 News Module is a comprehensive extension designed to facilitate the creation, editing, and management of news content on your website. This versatile module is suitable for a wide range of news types, including blogs, press releases, announcements, and other forms of news publishing.
+
 ## Installation
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
