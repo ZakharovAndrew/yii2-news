@@ -30,4 +30,15 @@ class News extends ActiveRecord
             'updated_at' => 'Обновлено',
         ];
     }
+    
+    public function getComments()
+    {
+        return $this->hasMany(Comment::className(), ['news_id' => 'id']);
+    }
+    
+    public function getRoles()
+    {
+        return $this->hasMany(ZakharovAndrew\user\models\Roles::className(), ['id' => 'role_id'])
+            ->viaTable('{{%news_roles}}', ['news_id' => 'id']);
+    }
 }
