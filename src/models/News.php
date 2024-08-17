@@ -3,6 +3,7 @@
 namespace ZakharovAndrew\news\models;
 
 use yii\db\ActiveRecord;
+use ZakharovAndrew\user\models\Roles;
 
 class News extends ActiveRecord
 {
@@ -38,7 +39,7 @@ class News extends ActiveRecord
     
     public function getRoles()
     {
-        return $this->hasMany(ZakharovAndrew\user\models\Roles::className(), ['id' => 'role_id'])
+        return $this->hasMany(Roles::className(), ['id' => 'role_id'])
             ->viaTable('{{%news_roles}}', ['news_id' => 'id']);
     }
 }
