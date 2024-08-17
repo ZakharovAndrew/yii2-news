@@ -7,6 +7,8 @@
 
 The Yii2 News Module is a comprehensive extension designed to facilitate the creation, editing, and management of news content on your website. This versatile module is suitable for a wide range of news types, including blogs, press releases, announcements, and other forms of news publishing.
 
+- Supports user comments
+- Supports user actions
 - Supports languages: English, Russian
 
 ## Installation
