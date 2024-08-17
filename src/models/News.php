@@ -3,7 +3,10 @@
 namespace ZakharovAndrew\news\models;
 
 use yii\db\ActiveRecord;
+use ZakharovAndrew\news\Module;
 use ZakharovAndrew\user\models\Roles;
+use ZakharovAndrew\news\models\Comment;
+use ZakharovAndrew\news\models\NewsReaction;
 
 class News extends ActiveRecord
 {
@@ -15,9 +18,9 @@ class News extends ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'content'], 'equired'],
-            [['title'], 'tring', 'ax' => 255],
-            [['content'], 'tring'],
+            [['title', 'content'], 'required'],
+            [['title'], 'string', 'max' => 255],
+            [['content'], 'string'],
         ];
     }
 
@@ -25,9 +28,9 @@ class News extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Заголовок',
-            'content' => 'Содержание',
-            'created_at' => 'Создано',
+            'title' => Module::t('Title'),
+            'content' => Module::t('Content'),
+            'created_at' => Module::t('Created'),
             'updated_at' => 'Обновлено',
         ];
     }
@@ -41,5 +44,10 @@ class News extends ActiveRecord
     {
         return $this->hasMany(Roles::className(), ['id' => 'role_id'])
             ->viaTable('{{%news_roles}}', ['news_id' => 'id']);
+    }
+    
+    public function getReactions()
+    {
+        return $this->hasMany(NewsReaction::className(), ['news_id' => 'id']);
     }
 }

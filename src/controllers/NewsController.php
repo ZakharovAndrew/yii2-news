@@ -108,6 +108,22 @@ class NewsController extends Controller
         return $this->redirect(Url::previous('news_index') ?? ['index']);
     }
     
+    public function actionReact($news_id, $reaction_id)
+    {
+        $model = new NewsReaction();
+        $model->news_id = $news_id;
+        $model->user_id = Yii::$app->user->id;
+        $model->reaction = $reaction_id;
+        
+        if ($model->save()) {
+            Yii::$app->session->setFlash('success', "Реакция добавлена"); 
+        } else {
+            Yii::$app->session->setFlash('error', "Не удалось сохранить реакцию");
+        }
+
+        return $this->redirect(['view', 'id' => $news_id]);
+    }
+    
     /**
      * Finds the News model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

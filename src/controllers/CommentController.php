@@ -23,6 +23,7 @@ class CommentController extends Controller
         $model = new Comment();
         $model->news_id = $news_id;
         $model->parent_id = $parent_id;
+        $model->author_id = Yii::$app->user->id;
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['news/view', 'id' => $news_id]);

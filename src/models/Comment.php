@@ -3,6 +3,9 @@
 namespace ZakharovAndrew\news\models;
 
 use yii\db\ActiveRecord;
+use ZakharovAndrew\news\models\News;
+use ZakharovAndrew\news\models\Comment;
+use ZakharovAndrew\user\models\User;
 
 class Comment extends ActiveRecord
 {
@@ -34,6 +37,11 @@ class Comment extends ActiveRecord
     public function getNews()
     {
         return $this->hasOne(News::className(), ['id' => 'news_id']);
+    }
+    
+    public function getAuthor()
+    {
+        return $this->hasOne(User::className(), ['id' => 'author_id']);
     }
     
     public function getParent()
