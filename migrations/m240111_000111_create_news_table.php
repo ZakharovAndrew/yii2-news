@@ -11,6 +11,7 @@ class m240111_000111_create_news_table extends Migration
             'title' => $this->string()->notNull(),
             'content' => $this->text()->notNull(),
             'user_id' => $this->integer()->notNull(),
+            'views' => $this->integer()->defaultValue(0),
             'created_at' => $this->timestamp()->defaultValue( new \yii\db\Expression('CURRENT_TIMESTAMP') ),
             'updated_at' => $this->timestamp()->null(),
         ]);

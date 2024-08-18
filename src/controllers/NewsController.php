@@ -2,7 +2,9 @@
 
 namespace ZakharovAndrew\news\controllers;
 
+use Yii;
 use ZakharovAndrew\news\models\News;
+use ZakharovAndrew\news\models\NewsReaction;
 use ZakharovAndrew\user\models\Roles;
 use yii\data\Pagination;
 use yii\web\Controller;
@@ -24,7 +26,7 @@ class NewsController extends Controller
     public function actionIndex()
     {
         // admin and news editor has access
-        if (Yii::$app->user->identity->hasRole(['admin', 'news_editor'])) {
+        if (\Yii::$app->user->identity->hasRole(['admin', 'news_editor'])) {
             $query = News::find()->orderBy(['created_at' => SORT_DESC]);
         } else {
             $query = News::find()
@@ -56,9 +58,12 @@ class NewsController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+        $model->views++;
+        $model->save(false);
 
         return $this->render('view', [
             'model' => $model,
+            'reactions' => \ZakharovAndrew\news\models\Reaction::find()->all()
         ]);
     }
 
@@ -70,7 +75,7 @@ class NewsController extends Controller
     public function actionCreate()
     {
         $model = new News();
-        $model->user_id = Yii::$app->user->id;
+        $model->user_id = \Yii::$app->user->id;
         $roles = Roles::find()->all();
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
@@ -126,7 +131,7 @@ class NewsController extends Controller
             'reaction_id' => $reaction_id
         ];
         
-        $model = NewsReaction::find()->where()->one($params);
+        $model = NewsReaction::find()->where($params)->one();
         
         if ($model) {
             Yii::$app->session->setFlash('error', "Нельзя повторно зарегистрировать реакцию");
@@ -156,13 +161,13 @@ class NewsController extends Controller
         if (($model = News::findOne(['id' => $id])) !== null) {
             
             // the author has access to the news
-            if ($news->user_id == Yii::$app->user->id) {
-                return true;
+            if ($model->user_id == \Yii::$app->user->id) {
+                return $model;
             }
 
             // admin and news editor has access
             if (Yii::$app->user->identity->hasRole(['admin', 'news_editor'])) {
-                return true;
+                return $model;
             }
 
             $userRoles = Roles::getRolesByUserId(Yii::$app->user->id);

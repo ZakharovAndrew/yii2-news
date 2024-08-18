@@ -31,8 +31,10 @@ class News extends ActiveRecord
             'id' => 'ID',
             'title' => Module::t('Title'),
             'content' => Module::t('Content'),
+            'views' => 'Просмотры',
             'created_at' => Module::t('Created'),
             'updated_at' => 'Обновлено',
+            'roles' => 'Роли',
         ];
     }
     
@@ -50,5 +52,12 @@ class News extends ActiveRecord
     public function getReactions()
     {
         return $this->hasMany(NewsReaction::className(), ['news_id' => 'id']);
+    }
+    
+    public function saveRoles($roles)
+    {
+        NewsRoles::deleteAll(['news_id' => $this->id]);
+        
+        var_dump($roles);
     }
 }

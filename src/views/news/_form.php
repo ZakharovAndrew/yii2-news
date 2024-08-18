@@ -7,6 +7,17 @@ use yii\widgets\ActiveForm;
 /* @var $model ZakharovAndrew\news\models\News */
 /* @var $form yii\widgets\ActiveForm */
 
+$this->registerJsFile('https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js');
+$script = <<< JS
+   
+ClassicEditor
+    .create( document.querySelector( '#news-content' ) )
+    .catch( error => {
+        console.error( error );
+    } );
+
+JS;
+$this->registerJs($script, yii\web\View::POS_READY);
 ?>
 
 <div class="news-form">
@@ -15,9 +26,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true])?>
 
-    <?= $form->field($model, 'content')->textarea(['rows' => 6])?>
+    <?= $form->field($model, 'content')->textarea(['rows' => 10])?>
 
-    <?= $form->field($model, 'roles')->checkboxList(\yii\helpers\ArrayHelper::map($roles, 'id', 'name'))?>
+    <?= $form->field($model, 'roles')->checkboxList(\yii\helpers\ArrayHelper::map($roles, 'id', 'title'))?>
 
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success'])?>

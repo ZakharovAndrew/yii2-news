@@ -2,6 +2,7 @@
 
 namespace ZakharovAndrew\news\controllers;
 
+use Yii;
 use ZakharovAndrew\news\models\Comment;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
