@@ -23,7 +23,16 @@ class NewsController extends Controller
      */
     public function actionIndex()
     {
-        $query = News::find()->orderBy(['created_at' => SORT_DESC]);
+        // admin and news editor has access
+        if (Yii::$app->user->identity->hasRole(['admin', 'news_editor'])) {
+            $query = News::find()->orderBy(['created_at' => SORT_DESC]);
+        } else {
+            $query = News::find()
+                    ->innerJoin('news_roles', 'news_roles.news_id = news.id')
+                    ->leftJoin('user_roles', 'user_roles.id = news_roles.role_id')
+                    ->where(['user_roles.user_id' => Yii::$app->user->id])
+                    ->orderBy(['created_at' => SORT_DESC]);
+        }
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 10]);
         $news = $query->offset($pagination->offset)
@@ -61,6 +70,7 @@ class NewsController extends Controller
     public function actionCreate()
     {
         $model = new News();
+        $model->user_id = Yii::$app->user->id;
         $roles = Roles::find()->all();
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
@@ -110,10 +120,20 @@ class NewsController extends Controller
     
     public function actionReact($news_id, $reaction_id)
     {
-        $model = new NewsReaction();
-        $model->news_id = $news_id;
-        $model->user_id = Yii::$app->user->id;
-        $model->reaction = $reaction_id;
+        $params = [
+            'news_id' => $news_id,
+            'user_id' => Yii::$app->user->id,
+            'reaction_id' => $reaction_id
+        ];
+        
+        $model = NewsReaction::find()->where()->one($params);
+        
+        if ($model) {
+            Yii::$app->session->setFlash('error', "Нельзя повторно зарегистрировать реакцию");
+            return $this->redirect(['view', 'id' => $news_id]);
+        }
+        
+        $model = new NewsReaction($params);
         
         if ($model->save()) {
             Yii::$app->session->setFlash('success', "Реакция добавлена"); 
@@ -134,7 +154,29 @@ class NewsController extends Controller
     protected function findModel($id)
     {
         if (($model = News::findOne(['id' => $id])) !== null) {
-            return $model;
+            
+            // the author has access to the news
+            if ($news->user_id == Yii::$app->user->id) {
+                return true;
+            }
+
+            // admin and news editor has access
+            if (Yii::$app->user->identity->hasRole(['admin', 'news_editor'])) {
+                return true;
+            }
+
+            $userRoles = Roles::getRolesByUserId(Yii::$app->user->id);
+            $newsRoles = $news->getRoles();
+
+            foreach ($userRoles as $userRole) {
+                foreach ($newsRoles as $newsRole) {
+                    if ($userRole->id === $newsRole->id) {
+                        return $model;
+                    }
+                }
+            }
+            
+            throw new NotFoundHttpException('У вас нет доступа к этой новости');
         }
 
         throw new NotFoundHttpException('The requested news does not exist.');

@@ -19,6 +19,7 @@ class News extends ActiveRecord
     {
         return [
             [['title', 'content'], 'required'],
+            [['user_id'], 'integer'],
             [['title'], 'string', 'max' => 255],
             [['content'], 'string'],
         ];
