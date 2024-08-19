@@ -10,8 +10,8 @@ class m240111_000112_create_comments_table extends Migration
             'id' => $this->primaryKey(),
             'news_id' => $this->integer()->notNull(),
             'content' => $this->text()->notNull(),
-            'created_at' => $this->integer()->notNull(),
-            'updated_at' => $this->integer()->notNull(),
+            'created_at' => $this->timestamp()->defaultValue( new \yii\db\Expression('CURRENT_TIMESTAMP') ),
+            'updated_at' => $this->timestamp()->null(),
         ]);
 
         $this->addForeignKey(

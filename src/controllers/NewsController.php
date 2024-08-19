@@ -5,6 +5,7 @@ namespace ZakharovAndrew\news\controllers;
 use Yii;
 use ZakharovAndrew\news\models\News;
 use ZakharovAndrew\news\models\NewsReaction;
+use ZakharovAndrew\news\models\Comment;
 use ZakharovAndrew\user\models\Roles;
 use yii\data\Pagination;
 use yii\web\Controller;
@@ -60,9 +61,11 @@ class NewsController extends Controller
         $model = $this->findModel($id);
         $model->views++;
         $model->save(false);
+        $modelComment = new Comment();
 
         return $this->render('view', [
             'model' => $model,
+            'modelComment' => $modelComment,
             'reactions' => \ZakharovAndrew\news\models\Reaction::find()->all()
         ]);
     }
