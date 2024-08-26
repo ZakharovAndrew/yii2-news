@@ -7,6 +7,7 @@ use ZakharovAndrew\news\Module;
 use ZakharovAndrew\user\models\Roles;
 use ZakharovAndrew\news\models\Comment;
 use ZakharovAndrew\news\models\NewsReaction;
+use ZakharovAndrew\news\models\NewsCategory;
 
 class News extends ActiveRecord
 {
@@ -57,7 +58,23 @@ class News extends ActiveRecord
     public function saveRoles($roles)
     {
         NewsRoles::deleteAll(['news_id' => $this->id]);
-        
-        var_dump($roles);
+    }
+    
+    public function getCategories()
+    {
+        return $this->hasMany(NewsCategory::className(), ['id' => 'category_id'])
+            ->viaTable('{{%news_category_links}}', ['news_id' => 'id']);
+    }
+    
+    public function saveCategories($categories)
+    {
+        NewsCategoryLinks::deleteAll(['news_id' => $this->id]);
+
+        foreach ($categories as $category) {
+            $link = new NewsCategoryLinks();
+            $link->news_id = $this->id;
+            $link->category_id = $category;
+            $link->save();
+        }
     }
 }
