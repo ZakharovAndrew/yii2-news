@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use ZakharovAndrew\news\Module;
 
 /* @var $this yii\web\View */
 /* @var $model ZakharovAndrew\news\models\News */
@@ -31,7 +32,7 @@ $this->registerJs($script, yii\web\View::POS_READY);
     <?= $form->field($model, 'roles')->checkboxList(\yii\helpers\ArrayHelper::map($roles, 'id', 'title'))?>
 
     <div class="form-group">
-        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success'])?>
+        <?= Html::submitButton(Module::t('Save'), ['class' => 'btn btn-success'])?>
     </div>
 
     <?php ActiveForm::end();?>
