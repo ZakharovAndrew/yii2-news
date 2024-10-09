@@ -14,8 +14,17 @@ class Reaction extends ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['name'], 'string'],
+            [['name', 'css_class'], 'required'],
+            [['name', 'css_class'], 'string', 'max' => 255],
+        ];
+    }
+    
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'name' => Module::t('Name'),
+            'css_class' => 'CSS class',
         ];
     }
 }
