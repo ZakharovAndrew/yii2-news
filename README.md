@@ -9,6 +9,7 @@ The Yii2 News Module is a comprehensive extension designed to facilitate the cre
 
 - Supports user comments
 - Supports user actions
+- Supports Bootstrap versions: 3, 4, 5
 - Supports languages: English, Russian
 
 ## Installation
