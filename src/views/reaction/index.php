@@ -1,24 +1,25 @@
 <?php
 
-use ZakharovAndrew\news\models\NewsReaction;
+use ZakharovAndrew\news\models\Reaction;
+use ZakharovAndrew\news\Module;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var ZakharovAndrew\news\models\NewsReactionSearch $searchModel */
+/** @var ZakharovAndrew\news\models\ReactionSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'News Reactions';
+$this->title = Module::t('News Reactions');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="news-reactions-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <?php if (Yii::$app->getModule('news')->showTitle) {?><h1><?= Html::encode($this->title) ?></h1><?php } ?>
 
     <p>
-        <?= Html::a('Create News Reactions', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Module::t('Create Reaction'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -27,15 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'id',
-            'news_id',
-            'user_id',
-            'reaction_id',
+            'name',
+            'css_class',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, NewsReaction $model, $key, $index, $column) {
+                'template' => '{update} {delete}',
+                'urlCreator' => function ($action, Reaction $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],

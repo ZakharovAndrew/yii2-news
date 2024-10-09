@@ -24,4 +24,7 @@ return [
     'Content' => 'Содержание',
     'Created' => 'Создано',
     'Save' => 'Сохранить',
+    
+    'News Reactions' => 'Реакции на новости',
+    'Create Reaction' => 'Создать реакцию',
 ];
