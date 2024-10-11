@@ -139,3 +139,31 @@
     background: #ff2323;
     color: #fff;
 }
+
+/* NEWS */
+.news-container {
+    max-width: 650px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.news-block {
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px 20px;
+    margin-top: 20px;
+}
+.news-block img {
+    width: -webkit-fill-available;
+    max-width: 610px;
+    border-radius: 10px
+}
+.news-block p {
+    font-size: 17px;
+    /*line-height: 26px;*/
+    margin: 0 0 20px;
+}
+.news-block h1 {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 30px;
+}
