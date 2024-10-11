@@ -1,5 +1,7 @@
 # Yii2 news
 
+![Yii2 news module by Zakharov Andrey](docs/images/yii-2-news-module-Zakharov-Andrey.png)
+
 [![Latest Stable Version](https://poser.pugx.org/zakharov-andrew/yii2-news/v/stable)](https://packagist.org/packages/zakharov-andrew/yii2-news)
 [![Total Downloads](https://poser.pugx.org/zakharov-andrew/yii2-news/downloads)](https://packagist.org/packages/zakharov-andrew/yii2-news)
 [![License](https://poser.pugx.org/zakharov-andrew/yii2-news/license)](https://packagist.org/packages/zakharov-andrew/yii2-news)
