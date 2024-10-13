@@ -5,6 +5,7 @@ namespace ZakharovAndrew\news\models;
 use yii\db\ActiveRecord;
 use ZakharovAndrew\news\models\News;
 use ZakharovAndrew\user\models\Roles;
+use ZakharovAndrew\news\Module;
 
 class NewsRoles extends ActiveRecord
 {
@@ -25,8 +26,8 @@ class NewsRoles extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'news_id' => 'ID новости',
-            'role_id' => 'ID роли',
+            'news_id' => Module::t('News'),
+            'role_id' => Module::t('Role'),
         ];
     }
 

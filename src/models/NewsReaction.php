@@ -3,6 +3,7 @@
 namespace ZakharovAndrew\news\models;
 
 use yii\db\ActiveRecord;
+use ZakharovAndrew\news\Module;
 
 class NewsReaction extends ActiveRecord
 {

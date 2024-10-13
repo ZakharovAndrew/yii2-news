@@ -39,7 +39,7 @@ class NewsReactionSearch extends NewsReaction
      */
     public function search($params)
     {
-        $query = NewsReactions::find();
+        $query = NewsReaction::find();
 
         // add conditions that should always apply here
 
