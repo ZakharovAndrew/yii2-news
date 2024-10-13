@@ -1,5 +1,7 @@
 # Yii2 news
-
+    
+![Yii2 news module by Zakharov Andrey](docs/images/yii-2-news-module-Zakharov-Andrey.png)
+    
 [![Latest Stable Version](https://poser.pugx.org/zakharov-andrew/yii2-news/v/stable)](https://packagist.org/packages/zakharov-andrew/yii2-news)
 [![Total Downloads](https://poser.pugx.org/zakharov-andrew/yii2-news/downloads)](https://packagist.org/packages/zakharov-andrew/yii2-news)
 [![License](https://poser.pugx.org/zakharov-andrew/yii2-news/license)](https://packagist.org/packages/zakharov-andrew/yii2-news)
@@ -7,8 +9,8 @@
 
 The Yii2 News Module is a comprehensive extension designed to facilitate the creation, editing, and management of news content on your website. This versatile module is suitable for a wide range of news types, including blogs, press releases, announcements, and other forms of news publishing.
 
-- Supports user comments
-- Supports user actions
+- Supports user comments, news category, view count, rating, user reactions, delayed publishing
+- Access to news by role are supported
 - Supports Bootstrap versions: 3, 4, 5
 - Supports languages: English, Russian
 
