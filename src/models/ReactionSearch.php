@@ -4,12 +4,12 @@ namespace ZakharovAndrew\news\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use ZakharovAndrew\news\models\NewsReaction;
+use ZakharovAndrew\news\models\Reaction;
 
 /**
- * NewsReactionSearch represents the model behind the search form of `ZakharovAndrew\news\models\NewsReaction`.
+ * ReactionSearch represents the model behind the search form of `ZakharovAndrew\news\models\Reaction`.
  */
-class NewsReactionSearch extends NewsReaction
+class ReactionSearch extends Reaction
 {
     /**
      * {@inheritdoc}
@@ -17,7 +17,8 @@ class NewsReactionSearch extends NewsReaction
     public function rules()
     {
         return [
-            [['id', 'news_id', 'user_id', 'reaction_id'], 'integer'],
+            [['id', 'pos'], 'integer'],
+            [['name'], 'string'],
         ];
     }
 
@@ -39,7 +40,7 @@ class NewsReactionSearch extends NewsReaction
      */
     public function search($params)
     {
-        $query = NewsReactions::find();
+        $query = Reaction::find();
 
         // add conditions that should always apply here
 
@@ -58,10 +59,9 @@ class NewsReactionSearch extends NewsReaction
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'news_id' => $this->news_id,
-            'user_id' => $this->user_id,
-            'reaction_id' => $this->reaction_id,
         ]);
+        
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

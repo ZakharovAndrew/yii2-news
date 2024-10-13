@@ -3,6 +3,7 @@
 namespace ZakharovAndrew\news\models;
 
 use yii\db\ActiveRecord;
+use ZakharovAndrew\news\Module;
 
 class Reaction extends ActiveRecord
 {
@@ -16,6 +17,7 @@ class Reaction extends ActiveRecord
         return [
             [['name', 'css_class'], 'required'],
             [['name', 'css_class'], 'string', 'max' => 255],
+            [['pos'], 'integer'],
         ];
     }
     
@@ -25,6 +27,7 @@ class Reaction extends ActiveRecord
             'id' => 'ID',
             'name' => Module::t('Name'),
             'css_class' => 'CSS class',
+            'pos' => 'Position'
         ];
     }
 }
