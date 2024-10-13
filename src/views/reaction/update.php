@@ -1,18 +1,18 @@
 <?php
 
 use yii\helpers\Html;
+use ZakharovAndrew\news\Module;
 
 /** @var yii\web\View $this */
 /** @var ZakharovAndrew\news\models\NewsReaction $model */
 
-$this->title = 'Update News Reaction: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'News Reactions', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = Module::t('Update Reaction') . ': ' . $model->id;
+$this->params['breadcrumbs'][] = ['label' => Module::t('News Reactions'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = Module::t('Update');
 ?>
 <div class="news-reactions-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <?php if (Yii::$app->getModule('news')->showTitle) {?><h1><?= Html::encode($this->title) ?></h1><?php } ?>
 
     <?= $this->render('_form', [
         'model' => $model,

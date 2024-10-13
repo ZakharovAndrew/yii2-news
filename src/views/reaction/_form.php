@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var ZakharovAndrew\news\models\NewsReaction $model */
+/** @var ZakharovAndrew\news\models\Reaction $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
@@ -12,11 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'news_id')->textInput() ?>
-
-    <?= $form->field($model, 'user_id')->textInput() ?>
-
-    <?= $form->field($model, 'reaction_id')->textInput() ?>
+    <?= $form->field($model, 'name')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
