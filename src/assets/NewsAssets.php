@@ -13,7 +13,7 @@ class NewsAssets extends AssetBundle
     public $sourcePath = '@vendor/zakharov-andrew/yii2-news/src/assets';
 
     public $css = [
-        'css/style_v1.2.css',
+        'css/style_v1.22.css',
     ];
 
     public $js = [

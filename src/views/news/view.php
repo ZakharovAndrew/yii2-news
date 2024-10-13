@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
     $comments = $model->getComments()->where('parent_id is null')->orderBy('created_at DESC')->all();
     $cnt_comment = $model->getComments()->count();
     ?>
-    <div class="comment-block">
+    <div class="comment-block" id="comments">
         <div class="comments-count"><?= Module::t('Comments') ?> (<?=$cnt_comment?>):</div>
 
         <div class="comment-form">

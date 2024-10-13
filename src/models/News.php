@@ -8,6 +8,7 @@ use ZakharovAndrew\user\models\Roles;
 use ZakharovAndrew\news\models\Comment;
 use ZakharovAndrew\news\models\NewsReaction;
 use ZakharovAndrew\news\models\NewsCategory;
+use ZakharovAndrew\user\models\User;
 
 class News extends ActiveRecord
 {
@@ -44,6 +45,11 @@ class News extends ActiveRecord
         return $this->hasMany(Comment::className(), ['news_id' => 'id']);
     }
     
+    public function getAuthor()
+    {
+        return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+    
     public function getRoles()
     {
         return $this->hasMany(Roles::className(), ['id' => 'role_id'])
@@ -76,5 +82,23 @@ class News extends ActiveRecord
             $link->category_id = $category;
             $link->save();
         }
+    }
+    
+    public  function getShortNews()
+    {
+        $shortNews = '';
+        $newsArray = explode("</p>", $this->content);
+        $count = 0;
+
+        foreach ($newsArray as $line) {
+          $shortNews .= $line . "\n";
+          $count++;
+
+          if ($count == 2) {
+            break;
+          }
+        }
+
+        return $shortNews;
     }
 }

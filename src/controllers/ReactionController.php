@@ -2,17 +2,17 @@
 
 namespace ZakharovAndrew\news\controllers;
 
-use ZakharovAndrew\news\models\NewsReaction;
-use ZakharovAndrew\news\models\NewsReactionSearch;
+use ZakharovAndrew\news\models\Reaction;
+use ZakharovAndrew\news\models\ReactionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * NewsReactionController implements the CRUD actions for NewsReaction model.
+ * ReactionController implements the CRUD actions for Reaction model.
  * @author Andrew Zakharov https://github.com/ZakharovAndrew
  */
-class NewsReactionController extends Controller
+class ReactionController extends Controller
 {
     /**
      * @inheritDoc
@@ -33,13 +33,13 @@ class NewsReactionController extends Controller
     }
 
     /**
-     * Lists all NewsReaction models.
+     * Lists all Reaction models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new NewsReactionSearch();
+        $searchModel = new ReactionSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -49,13 +49,13 @@ class NewsReactionController extends Controller
     }
 
     /**
-     * Creates a new NewsReaction model.
+     * Creates a new Reaction model.
      * If creation is successful, the browser will be redirected to the 'index' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new NewsReaction();
+        $model = new Reaction();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -71,7 +71,7 @@ class NewsReactionController extends Controller
     }
 
     /**
-     * Updates an existing NewsReaction model.
+     * Updates an existing Reaction model.
      * If update is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -91,7 +91,7 @@ class NewsReactionController extends Controller
     }
 
     /**
-     * Deletes an existing NewsReaction model.
+     * Deletes an existing Reaction model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -105,15 +105,15 @@ class NewsReactionController extends Controller
     }
 
     /**
-     * Finds the NewsReaction model based on its primary key value.
+     * Finds the Reaction model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return NewsReaction the loaded model
+     * @return Reaction the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = NewsReaction::findOne(['id' => $id])) !== null) {
+        if (($model = Reaction::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
