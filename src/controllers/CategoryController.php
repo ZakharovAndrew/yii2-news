@@ -2,16 +2,16 @@
 
 namespace ZakharovAndrew\news\controllers;
 
-use ZakharovAndrew\news\models\NewsCategories;
-use ZakharovAndrew\news\models\NewsCategorySearch;
+use ZakharovAndrew\news\models\Category;
+use ZakharovAndrew\news\models\CategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * NewsCategoryController implements the CRUD actions for NewsCategories model.
+ * CategoryController implements the CRUD actions for Category model.
  */
-class NewsCategoryController extends Controller
+class CategoryController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class NewsCategoryController extends Controller
     }
 
     /**
-     * Lists all NewsCategories models.
+     * Lists all Category models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new NewsCategorySearch();
+        $searchModel = new CategorySearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,13 +48,13 @@ class NewsCategoryController extends Controller
     }
 
     /**
-     * Creates a new NewsCategories model.
+     * Creates a new Category model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new NewsCategories();
+        $model = new Category();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -70,7 +70,7 @@ class NewsCategoryController extends Controller
     }
 
     /**
-     * Updates an existing NewsCategories model.
+     * Updates an existing Category model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -90,7 +90,7 @@ class NewsCategoryController extends Controller
     }
 
     /**
-     * Deletes an existing NewsCategories model.
+     * Deletes an existing Category model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -104,15 +104,15 @@ class NewsCategoryController extends Controller
     }
 
     /**
-     * Finds the NewsCategories model based on its primary key value.
+     * Finds the Category model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return NewsCategories the loaded model
+     * @return Category the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = NewsCategories::findOne(['id' => $id])) !== null) {
+        if (($model = Category::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

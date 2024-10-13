@@ -1,6 +1,7 @@
 <?php
 
-use ZakharovAndrew\news\models\NewsCategory;
+use ZakharovAndrew\news\models\Category;
+use ZakharovAndrew\news\Module;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -10,15 +11,15 @@ use yii\grid\GridView;
 /** @var ZakharovAndrew\news\models\NewsCategorySearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'News Categories';
+$this->title = Module::t('News Categories');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="news-categories-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <?php if (Yii::$app->getModule('news')->showTitle) {?><h1><?= Html::encode($this->title) ?></h1><?php } ?>
 
     <p>
-        <?= Html::a('Create News Categories', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Module::t('Create Category'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -27,14 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'id',
             'name',
             'url:url',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, NewsCategories $model, $key, $index, $column) {
+                'urlCreator' => function ($action, Category $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],

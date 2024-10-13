@@ -4,12 +4,12 @@ namespace ZakharovAndrew\news\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use ZakharovAndrew\news\models\NewsCategory;
+use ZakharovAndrew\news\models\Category;
 
 /**
  * NewsCategorySearch represents the model behind the search form of `app\models\NewsCategory`.
  */
-class NewsCategorySearch extends NewsCategory
+class CategorySearch extends Category
 {
     /**
      * {@inheritdoc}
@@ -40,7 +40,7 @@ class NewsCategorySearch extends NewsCategory
      */
     public function search($params)
     {
-        $query = NewsCategory::find();
+        $query = Category::find();
 
         // add conditions that should always apply here
 

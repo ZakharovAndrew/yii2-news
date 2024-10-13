@@ -14,7 +14,7 @@ use Yii;
  * @property News[] $news
  * @property NewsCategoryLinks[] $newsCategoryLinks
  */
-class NewsCategory extends \yii\db\ActiveRecord
+class Category extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
