@@ -19,7 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
-        'roles' => Roles::find()->all(),
+        'roles' => $roles,
+        'categories' => $categories,
     ])?>
 
 </div>

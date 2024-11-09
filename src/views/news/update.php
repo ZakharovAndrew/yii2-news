@@ -15,7 +15,8 @@ use yii\helpers\Html;
 
     <?= $this->render('_form', [
         'model' => $model,
-        'roles' => Roles::find()->all(),
+        'roles' => $roles,
+        'categories' => $categories,
     ])?>
 
 </div>

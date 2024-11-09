@@ -19,6 +19,7 @@ ClassicEditor
 
 JS;
 $this->registerJs($script, yii\web\View::POS_READY);
+//var_dump($model->roles); die();
 ?>
 
 <div class="news-form">
@@ -28,8 +29,10 @@ $this->registerJs($script, yii\web\View::POS_READY);
     <?= $form->field($model, 'title')->textInput(['maxlength' => true])?>
 
     <?= $form->field($model, 'content')->textarea(['rows' => 10])?>
+    
+    <?= $form->field($model, 'categories')->checkboxList(\yii\helpers\ArrayHelper::map($categories, 'id', 'name')) ?>
 
-    <?= $form->field($model, 'roles')->checkboxList(\yii\helpers\ArrayHelper::map($roles, 'id', 'title'))?>
+    <?= $form->field($model, 'roles')->checkboxList($roles)?>
 
     <div class="form-group">
         <?= Html::submitButton(Module::t('Save'), ['class' => 'btn btn-success'])?>
