@@ -32,10 +32,10 @@ return [
     'Add News' => 'Добавить новость',
     'Create Reaction' => 'Создать реакцию',
     'Edit' => 'Редактировать',
+    'Delete' => 'Удалить',
     'Reply' => 'Ответить',
     'Update Reaction' => 'Обновить реакцию',
     'Update' => 'Обновить',
     'News Categories' => 'Категории новостей',
     'Create Category' => 'Создать категорию'
-    
 ];

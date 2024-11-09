@@ -22,7 +22,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     body {
         background: #ebebeb;
-    }    
+    }
+    .news-block li {
+        font-size: 17px;
+        margin: 0 0 10px;
+    }
 </style>
 
 <div class="news-container">
@@ -33,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= $model->views?> просмотров
 
-        <p><?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => ''])?> | <?= Html::a('Удалить', ['delete', 'id' => $model->id], ['class' => ''])?></p>
+        <p><?= Html::a(Module::t('Редактировать'), ['update', 'id' => $model->id], ['class' => ''])?> | <?= Html::a(Module::t('Delete'), ['delete', 'id' => $model->id], ['class' => ''])?></p>
 
         <?php foreach ($reactions as $reaction) {
             $cnt = ZakharovAndrew\news\models\NewsReaction::find()->where([
