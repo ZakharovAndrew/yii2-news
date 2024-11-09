@@ -64,11 +64,18 @@ class News extends ActiveRecord
     public function saveRoles($roles)
     {
         NewsRoles::deleteAll(['news_id' => $this->id]);
+        
+        foreach ($roles as $role) {
+            $newsRoles = new NewsRoles();                    
+            $newsRoles->news_id = $this->id;
+            $newsRoles->role_id = $role;
+            $newsRoles->save();
+        }
     }
     
     public function getCategories()
     {
-        return $this->hasMany(NewsCategory::className(), ['id' => 'category_id'])
+        return $this->hasMany(Category::className(), ['id' => 'category_id'])
             ->viaTable('{{%news_category_links}}', ['news_id' => 'id']);
     }
     
