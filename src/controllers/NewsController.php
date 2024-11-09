@@ -92,6 +92,7 @@ class NewsController extends Controller
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             $model->saveRoles(\Yii::$app->request->post()['News']['roles'] ?? []);
+            $model->saveCategories(\Yii::$app->request->post()['News']['categories'] ?? []);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -115,6 +116,7 @@ class NewsController extends Controller
         
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             $model->saveRoles(\Yii::$app->request->post()['News']['roles'] ?? []);
+            $model->saveCategories(\Yii::$app->request->post()['News']['categories'] ?? []);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

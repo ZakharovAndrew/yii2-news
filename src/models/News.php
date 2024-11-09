@@ -82,7 +82,11 @@ class News extends ActiveRecord
     public function saveCategories($categories)
     {
         NewsCategoryLinks::deleteAll(['news_id' => $this->id]);
-
+        
+        if (empty($categories)) {
+            return;
+        }
+        
         foreach ($categories as $category) {
             $link = new NewsCategoryLinks();
             $link->news_id = $this->id;
