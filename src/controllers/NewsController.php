@@ -6,6 +6,7 @@ use Yii;
 use ZakharovAndrew\news\models\News;
 use ZakharovAndrew\news\models\NewsReaction;
 use ZakharovAndrew\news\models\Comment;
+use ZakharovAndrew\news\models\Category;
 use ZakharovAndrew\user\models\Roles;
 use yii\data\Pagination;
 use yii\web\Controller;
@@ -24,7 +25,7 @@ class NewsController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($category = null)
     {
         // admin and news editor has access
         if (\Yii::$app->user->identity->hasRole(['admin', 'news_editor'])) {
@@ -36,6 +37,15 @@ class NewsController extends Controller
                     ->where(['user_roles.user_id' => Yii::$app->user->id])
                     ->orderBy(['created_at' => SORT_DESC]);
         }
+        
+        // filter by category
+        if ($category) {
+            if (($category_id = Category::findOne(['url' => $category])) === null) {
+                throw new NotFoundHttpException('The requested news does not exist.');
+            }
+            $query->innerJoin('news_category_links', 'news_category_links.news_id = news.id AND news_category_links.category_id = '.$category_id->id);
+        }
+        
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count, 'pageSize' => 10]);
         $news = $query->offset($pagination->offset)
@@ -79,16 +89,16 @@ class NewsController extends Controller
     {
         $model = new News();
         $model->user_id = \Yii::$app->user->id;
-        $roles = Roles::find()->all();
 
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-            $model->saveRoles(\Yii::$app->request->post('roles'));
+            $model->saveRoles(\Yii::$app->request->post()['News']['roles'] ?? []);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
-            'roles' => $roles
+            'roles' => Roles::getRolesList(),
+            'categories' => Category::find()->all()
         ]);
     }
 
@@ -104,11 +114,14 @@ class NewsController extends Controller
         $model = $this->findModel($id);
         
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+            $model->saveRoles(\Yii::$app->request->post()['News']['roles'] ?? []);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'roles' => Roles::getRolesList(),
+            'categories' => Category::find()->all()
         ]);
     }
 

@@ -17,7 +17,7 @@ class NewsRoles extends ActiveRecord
     public function rules()
     {
         return [
-            [['news_id', 'role_id'], 'equired'],
+            [['news_id', 'role_id'], 'required'],
             [['news_id', 'role_id'], 'integer'],
         ];
     }
