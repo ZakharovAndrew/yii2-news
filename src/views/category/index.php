@@ -30,7 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             'id',
             'name',
-            'url:url',
+            [
+                'attribute' => 'url',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return Html::a($model->name, ['/news/news/index', 'category' => $model->url]);
+                }
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Category $model, $key, $index, $column) {
