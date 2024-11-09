@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= $model->views?> просмотров
 
-        <p><?= Html::a(Module::t('Редактировать'), ['update', 'id' => $model->id], ['class' => ''])?> | <?= Html::a(Module::t('Delete'), ['delete', 'id' => $model->id], ['class' => ''])?></p>
+        <p><?= Html::a(Module::t('Edit'), ['update', 'id' => $model->id], ['class' => ''])?> | <?= Html::a(Module::t('Delete'), ['delete', 'id' => $model->id], ['class' => ''])?></p>
 
         <?php foreach ($reactions as $reaction) {
             $cnt = ZakharovAndrew\news\models\NewsReaction::find()->where([

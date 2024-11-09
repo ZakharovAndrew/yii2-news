@@ -37,5 +37,6 @@ return [
     'Update Reaction' => 'Обновить реакцию',
     'Update' => 'Обновить',
     'News Categories' => 'Категории новостей',
-    'Create Category' => 'Создать категорию'
+    'Create Category' => 'Создать категорию',
+    'Add Comment' => 'Добавить комментарий'
 ];
