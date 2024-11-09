@@ -55,10 +55,10 @@ NewsAssets::register($this);
 <?php foreach ($news as $model):?>
     <div class="news-block">
         <div class="news-head">
-            <a href="<?= Url::to(['/user/user/profile', 'id' => $model->author->id])?>" class="news-avatar"><img src="<?= !$model->author->getAvatarUrl() ?
+            <div class="news-avatar"><img src="<?= !$model->author->getAvatarUrl() ?
                             Yii::$app->assetManager->getAssetUrl(UserAssets::register($this), 'images/default-avatar.png') :
                             $model->author->getAvatarUrl()
-                        ?>" alt="Avatar"></a>
+                        ?>" alt="Avatar"></div>
             <div class="comment-author"><b><?= $model->author->name ?></b><div class="comment-datetime"><?php
             echo Yii::$app->formatter->asDate($model->created_at) ?></div></div>
         </div>
