@@ -188,15 +188,13 @@ class NewsController extends Controller
                 return $model;
             }
 
-            $userRoles = Roles::getRolesByUserId(Yii::$app->user->id);
-            $newsRoles = $news->getRoles();
-
-            foreach ($userRoles as $userRole) {
-                foreach ($newsRoles as $newsRole) {
-                    if ($userRole->id === $newsRole->id) {
-                        return $model;
-                    }
-                }
+            $newsRoles = NewsRoles::find()
+                    ->leftJoin('user_roles', 'user_roles.id = news_roles.role_id   AND `user_roles`.`user_id` = '.Yii::$app->user->id)
+                    ->where(['user_roles.news_id' => $model->id])
+                    ->one();
+                    
+            if ($newsRoles) {
+                return $model;    
             }
             
             throw new NotFoundHttpException('У вас нет доступа к этой новости');
