@@ -4,6 +4,7 @@ namespace ZakharovAndrew\news\controllers;
 
 use Yii;
 use ZakharovAndrew\news\models\News;
+use ZakharovAndrew\news\models\NewsRoles;
 use ZakharovAndrew\news\models\NewsReaction;
 use ZakharovAndrew\news\models\Comment;
 use ZakharovAndrew\news\models\Category;
@@ -33,8 +34,7 @@ class NewsController extends Controller
         } else {
             $query = News::find()
                     ->innerJoin('news_roles', 'news_roles.news_id = news.id')
-                    ->leftJoin('user_roles', 'user_roles.id = news_roles.role_id')
-                    ->where(['user_roles.user_id' => Yii::$app->user->id])
+                    ->leftJoin('user_roles', 'user_roles.id = news_roles.role_id AND `user_roles`.`user_id` = '.Yii::$app->user->id)
                     ->orderBy(['created_at' => SORT_DESC]);
         }
         
