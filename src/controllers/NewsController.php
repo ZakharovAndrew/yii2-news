@@ -190,7 +190,7 @@ class NewsController extends Controller
 
             $newsRoles = NewsRoles::find()
                     ->leftJoin('user_roles', 'user_roles.id = news_roles.role_id   AND `user_roles`.`user_id` = '.Yii::$app->user->id)
-                    ->where(['user_roles.news_id' => $model->id])
+                    ->where(['news_roles.news_id' => $model->id])
                     ->one();
                     
             if ($newsRoles) {
