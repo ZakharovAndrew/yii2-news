@@ -47,11 +47,24 @@ NewsAssets::register($this);
     .news-block h2 a:hover {
         color:blue;
     }
+    .short-content-link {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .new-short-content {
+        position: relative
+    }
 </style>
 
 <?php if (Yii::$app->getModule('news')->showTitle) {?><h1><?= Html::encode($this->title) ?></h1><?php } ?>
 
 <div class="news-container">
+<?php if (Yii::$app->user->identity->hasRole('admin')) {?>
+    <?= Html::a(Module::t('Add News'), ['create'], ['class' => 'btn btn-success'])?>
+<?php } ?>
 <?php foreach ($news as $model):?>
     <div class="news-block">
         <div class="news-head">
@@ -62,8 +75,11 @@ NewsAssets::register($this);
             <div class="comment-author"><b><?= $model->author->name ?></b><div class="comment-datetime"><?php
             echo Yii::$app->formatter->asDate($model->created_at) ?></div></div>
         </div>
+        <div class="new-short-content">
         <h2><?= Html::a(Html::encode($model->title), ['view', 'id' => $model->id])?></h2>
-        <p><?= $model->getShortNews() ?></p>
+        <article  onclick=""><?= $model->getShortNews() ?></article>
+        <?= Html::a('', ['view', 'id' => $model->id], ['class' => 'short-content-link'])?>
+        </div>
         <div class="news-footer">
             <a href="<?= Url::to(['view', 'id' => $model->id])?>#comments" class="news-comments-count">
                 <div class="news-comments"></div>
