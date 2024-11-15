@@ -30,6 +30,7 @@ return [
     
     'News Reactions' => 'Реакции на новости',
     'Add News' => 'Добавить новость',
+    'Update News' => 'Обновить новость',
     'Create Reaction' => 'Создать реакцию',
     'Edit' => 'Редактировать',
     'Delete' => 'Удалить',
