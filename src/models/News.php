@@ -65,6 +65,10 @@ class News extends ActiveRecord
     {
         NewsRoles::deleteAll(['news_id' => $this->id]);
         
+        if (!is_array($roles)) {
+            return;
+        }
+        
         foreach ($roles as $role) {
             $newsRoles = new NewsRoles();                    
             $newsRoles->news_id = $this->id;
