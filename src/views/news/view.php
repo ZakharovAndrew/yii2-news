@@ -27,6 +27,9 @@ $this->params['breadcrumbs'][] = $this->title;
         font-size: 17px;
         margin: 0 0 10px;
     }
+    .news-block li, .news-block p, .news-block h1 {
+        font-family:Roboto;
+    }
 </style>
 
 <div class="news-container">
