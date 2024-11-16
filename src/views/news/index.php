@@ -64,6 +64,7 @@ NewsAssets::register($this);
 <div class="news-container">
 <?php if (Yii::$app->user->identity->hasRole('admin')) {?>
     <?= Html::a(Module::t('Add News'), ['create'], ['class' => 'btn btn-success'])?>
+    <?= Html::a(Module::t('News Categories'), ['/news/category/index'], ['class' => 'btn btn-success'])?>
 <?php } ?>
 <?php foreach ($news as $model):?>
     <div class="news-block">
