@@ -153,7 +153,8 @@ class NewsController extends Controller
         $model = NewsReaction::find()->where($params)->one();
         
         if ($model) {
-            Yii::$app->session->setFlash('error', "Нельзя повторно зарегистрировать реакцию");
+            Yii::$app->session->setFlash('success', "Реакция отменена");
+            $model->delete();
             return $this->redirect(['view', 'id' => $news_id]);
         }
         
