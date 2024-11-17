@@ -35,6 +35,7 @@ class NewsController extends Controller
             $query = News::find()
                     ->innerJoin('news_roles', 'news_roles.news_id = news.id')
                     ->leftJoin('user_roles', 'user_roles.id = news_roles.role_id AND `user_roles`.`user_id` = '.Yii::$app->user->id)
+                    ->groupBy('news.id')
                     ->orderBy(['created_at' => SORT_DESC]);
         }
         
