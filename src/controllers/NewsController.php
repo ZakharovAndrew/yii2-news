@@ -142,31 +142,50 @@ class NewsController extends Controller
         return $this->redirect(Url::previous('news_index') ?? ['index']);
     }
     
-    public function actionReact($news_id, $reaction_id)
+    /**
+     * Adding or removing a reaction to the news.
+     * @return string|\yii\web\Response
+     */
+    public function actionReact()
     {
-        $params = [
-            'news_id' => $news_id,
-            'user_id' => Yii::$app->user->id,
-            'reaction_id' => $reaction_id
-        ];
-        
-        $model = NewsReaction::find()->where($params)->one();
-        
-        if ($model) {
-            Yii::$app->session->setFlash('success', "Реакция отменена");
-            $model->delete();
-            return $this->redirect(['view', 'id' => $news_id]);
-        }
-        
-        $model = new NewsReaction($params);
-        
-        if ($model->save()) {
-            Yii::$app->session->setFlash('success', "Реакция добавлена"); 
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+
+        $newsId = Yii::$app->request->post('news_id');
+        $reactionId = Yii::$app->request->post('reaction_id');
+        $userId = Yii::$app->user->id;
+
+        $reaction = NewsReaction::find()->where([
+            'news_id' => $newsId,
+            'reaction_id' => $reactionId,
+            'user_id' => $userId,
+        ])->one();
+
+        if ($reaction) {
+            // If the reaction already exists, we remove it
+            $reaction->delete();
+            $userReacted = false;
         } else {
-            Yii::$app->session->setFlash('error', "Не удалось сохранить реакцию");
+            // If there is no reaction, we create a new one.
+            $reaction = new NewsReaction([
+                'news_id' => $newsId,
+                'reaction_id' => $reactionId,
+                'user_id' => $userId,
+            ]);
+            $reaction->save();
+            $userReacted = true;
         }
 
-        return $this->redirect(['view', 'id' => $news_id]);
+        // Getting the new number of reactions
+        $newCount = NewsReaction::find()->where([
+            'news_id' => $newsId,
+            'reaction_id' => $reactionId,
+        ])->count();
+
+        return [
+            'success' => true,
+            'new_count' => $newCount,
+            'user_reacted' => $userReacted,
+        ];
     }
     
     /**

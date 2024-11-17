@@ -17,6 +17,42 @@ NewsAssets::register($this);
 $this->title = $model->title;
 $this->params['breadcrumbs'][] = ['label' => Module::t('News'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$url_react = Url::to(['react']);
+
+$script = <<< JS
+   
+$(document).on('click', '.reaction', function(e) {
+    e.preventDefault(); // предотвращаем переход по ссылке
+
+    var newsId = $(this).data('news-id');
+    var reactionId = $(this).data('reaction-id');
+    
+    $.ajax({
+        url: '$url_react',
+        type: 'POST',
+        data: {
+            news_id: newsId,
+            reaction_id: reactionId
+        },
+        success: function(response) {
+            // Обновляем количество реакций на странице
+            if (response.success) {
+                // Обновляем счетчик реакций
+                // Например, если у вас есть элемент с классом reaction_count
+                var countElement = $('a[data-news-id="' + newsId + '"][data-reaction-id="' + reactionId + '"]');
+                countElement.text(response.new_count);
+                countElement.toggleClass('reaction_selected', response.user_reacted);
+            }
+        },
+        error: function() {
+            alert('Ошибка при обработке запроса. Пожалуйста, попробуйте еще раз.');
+        }
+    });
+});
+
+JS;
+$this->registerJs($script, yii\web\View::POS_READY);
 ?>
 <style>
 
@@ -48,9 +84,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ])->count();
             $cnt_by_user = ZakharovAndrew\news\models\NewsReaction::find()->where([
                 'news_id' => $model->id, 'reaction_id' => $reaction->id, 'user_id' => Yii::$app->user->id
-            ])->count();
-            echo Html::a($cnt, ['react', 'news_id' => $model->id, 'reaction_id' => $reaction->id], ['class' => 'reaction '.$reaction->css_class . ($cnt_by_user > 0 ? ' reaction_selected' : ''), 'title' => $reaction->name]);
-        } ?>
+            ])->count();?>
+            <a href="#" class="reaction <?= $reaction->css_class . ($cnt_by_user > 0 ? ' reaction_selected' : '') ?>" 
+                data-news-id="<?= $model->id ?>" data-reaction-id="<?= $reaction->id ?>" 
+                title="<?= Html::encode($reaction->name) ?>">
+                <?= $cnt ?>
+            </a>
+        <?php } ?>
     </div>
 
     <?php 
@@ -104,3 +144,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     
 </div>
+
+<script>
+
+</script>
