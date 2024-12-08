@@ -26,11 +26,29 @@ class CommentController extends Controller
         $model->parent_id = $parent_id;
         $model->author_id = Yii::$app->user->id;
 
-        if ($model->save()) {
-            return $this->asJson(['success' => true, 'new_comment' => $this->renderPartial('_comment', ['comment' => $model])]);
+        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['news/view', 'id' => $news_id]);
         }
 
-        return $this->asJson(['success' => false]);
+        return $this->render('create', [
+            'model' => $model,
+            'news_id' => $news_id,
+        ]);
+    }
+    
+    public function actionCreateAjax($news_id)
+    {
+        $model = new Comment();
+        $model->news_id = $news_id;
+        $model->parent_id = Yii::$app->request->post()['parent_id'] ?? null;
+        $model->author_id = Yii::$app->user->id;
+        $model->content = Yii::$app->request->post()['content'];
+        
+        if ($model->save()) {
+            return $this->asJson(['success' => true, 'new_comment' => $this->renderPartial('_comment', ['model' => $model])]);
+        }
+
+        return $this->asJson(['success' => false, 'error' => $model->getErrors()]);
     }
 
     /**

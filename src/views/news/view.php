@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = ['label' => Module::t('News'), 'url' => ['index
 $this->params['breadcrumbs'][] = $this->title;
 
 $url_react = Url::to(['react']);
-$url_comment_create = Url::to(['comment/create', 'news_id' => $model->id]);
+$url_comment_create = Url::to(['comment/create-ajax', 'news_id' => $model->id]);
 $news_id = $model->id;
 
 $script = <<< JS
@@ -56,14 +56,12 @@ $(document).on('click', '.reaction', function(e) {
 $(document).on('click', '.reply-button', function(e) {
     e.preventDefault();
     var commentId = $(this).data('id');
-    console.log('asdss');
-
+        
     // Проверяем, существует ли уже форма ответа
     if ($('#reply-form-' + commentId).length === 0) {
         $(".reply-form").remove();
-        console.log('11asdss');
         var replyFormHtml = `
-            <div class="reply-form" id="reply-form-\${commentId}">
+            <div class="reply-form comment-child" id="reply-form-\${commentId}">
                 <textarea rows="2" placeholder="Оставьте ответ..." class="form-control reply-textarea"></textarea>
                 <div class="form-group">
                     <button class="btn btn-primary submit-reply" data-comment-id="\${commentId}">Отправить</button>
@@ -78,7 +76,7 @@ $(document).on('click', '.reply-button', function(e) {
 });
 
         
-        // Обработка отправки ответа на комментарий
+// Обработка отправки ответа на комментарий
 $(document).on('click', '.submit-reply', function() {
     var commentId = $(this).data('comment-id');
     var content = $('#reply-form-' + commentId).find('.reply-textarea').val();
@@ -96,7 +94,7 @@ $(document).on('click', '.submit-reply', function() {
             if (response.success) {
                 // Добавить новый комментарий в разметку
                 $('#reply-form-' + commentId).before(response.new_comment);
-                $('#reply-form-' + commentId).remove(); // Удалить форму после отправки
+                $('#reply-form-' + commentId).remove(); // delete form
             } else {
                 alert('Ошибка при добавлении комментария.');
             }
