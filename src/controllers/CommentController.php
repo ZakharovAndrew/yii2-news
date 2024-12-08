@@ -26,14 +26,11 @@ class CommentController extends Controller
         $model->parent_id = $parent_id;
         $model->author_id = Yii::$app->user->id;
 
-        if ($model->load(\Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['news/view', 'id' => $news_id]);
+        if ($model->save()) {
+            return $this->asJson(['success' => true, 'new_comment' => $this->renderPartial('_comment', ['comment' => $model])]);
         }
 
-        return $this->render('create', [
-            'model' => $model,
-            'news_id' => $news_id,
-        ]);
+        return $this->asJson(['success' => false]);
     }
 
     /**
