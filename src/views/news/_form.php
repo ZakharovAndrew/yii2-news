@@ -13,7 +13,7 @@ UserAssets::register($this);
 
 $this->registerJsFile('https://cdn.ckeditor.com/ckeditor5/41.1.0/classic/ckeditor.js');
 $script = <<< JS
-   
+        
 ClassicEditor
     .create( document.querySelector( '#news-content' ) )
     .catch( error => {

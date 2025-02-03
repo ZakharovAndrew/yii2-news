@@ -46,11 +46,16 @@ class Comment extends ActiveRecord
     
     public function getParent()
     {
-        return $this->hasOne(Comment::className(), ['id' => 'parent_id']);
+        return $this->hasOne(static::className(), ['id' => 'parent_id']);
     }
 
     public function getChildren()
     {
-        return $this->hasMany(Comment::className(), ['parent_id' => 'id']);
+        return $this->hasMany(static::className(), ['parent_id' => 'id']);
+    }
+    
+    public function getDatetime($format = 'd.m.Y H:i:s')
+    {
+        return date($format, strtotime($this->created_at));
     }
 }

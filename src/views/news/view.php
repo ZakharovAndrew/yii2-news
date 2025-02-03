@@ -6,6 +6,7 @@ use ZakharovAndrew\news\Module;
 
 use ZakharovAndrew\user\assets\UserAssets;
 use ZakharovAndrew\news\assets\NewsAssets;
+use ZakharovAndrew\news\models\NewsReaction;
 use yii\helpers\Url;
 
 UserAssets::register($this);
@@ -132,10 +133,10 @@ $this->registerJs($script, yii\web\View::POS_READY);
         <p><?= Html::a(Module::t('Edit'), ['update', 'id' => $model->id], ['class' => ''])?> | <?= Html::a(Module::t('Delete'), ['delete', 'id' => $model->id], ['class' => ''])?></p>
 
         <?php foreach ($reactions as $reaction) {
-            $cnt = ZakharovAndrew\news\models\NewsReaction::find()->where([
+            $cnt = NewsReaction::find()->where([
                 'news_id' => $model->id, 'reaction_id' => $reaction->id
             ])->count();
-            $cnt_by_user = ZakharovAndrew\news\models\NewsReaction::find()->where([
+            $cnt_by_user = NewsReaction::find()->where([
                 'news_id' => $model->id, 'reaction_id' => $reaction->id, 'user_id' => Yii::$app->user->id
             ])->count();?>
             <a href="#" class="reaction <?= $reaction->css_class . ($cnt_by_user > 0 ? ' reaction_selected' : '') ?>" 
@@ -174,7 +175,7 @@ $this->registerJs($script, yii\web\View::POS_READY);
                                     Yii::$app->assetManager->getAssetUrl(UserAssets::register($this), 'images/default-avatar.png') :
                                     $comment->author->getAvatarUrl()
                                 ?>" alt="Avatar"></div>
-                    <div class="comment-author"><?= $comment->author->name ?><div class="comment-datetime"><?= date('d.m.Y H:i:s', strtotime($comment->created_at)) ?></div></div>
+                    <div class="comment-author"><?= $comment->author->name ?><div class="comment-datetime"><?= $comment->getDatetime() ?></div></div>
                 </div>
                 <div><?= $comment->content?></div>
                 <div class="comment-actions">
@@ -190,7 +191,7 @@ $this->registerJs($script, yii\web\View::POS_READY);
                                     Yii::$app->assetManager->getAssetUrl(UserAssets::register($this), 'images/default-avatar.png') :
                                     $child->author->getAvatarUrl()
                                 ?>" alt="Avatar"></div>
-                            <div class="comment-author"><?= $child->author->name?><div class="comment-datetime"><?= date('d.m.Y H:i:s', strtotime($child->created_at)) ?></div></div>
+                            <div class="comment-author"><?= $child->author->name?><div class="comment-datetime"><?= $child->getDatetime() ?></div></div>
                         </div>
                         <div class="comment-content"><?= $child->content?></div>
                         <div class="comment-actions"><?= Html::a(Module::t('Edit'), ['comment/update', 'id' => $child->id])?> <?= Html::a('Удалить', ['comment/delete', 'id' => $child->id])?></div>
