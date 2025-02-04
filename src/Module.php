@@ -58,17 +58,22 @@ class Module extends \yii\base\Module
     public function init()
     {
         parent::init();
-        $this->registerTranslations();
+        
+        self::registerTranslations();
     }
     
     /**
      * Registers the translation files
      */
-    protected function registerTranslations()
+    protected static function registerTranslations()
     {
+        if (isset(Yii::$app->i18n->translations['extension/yii2-news/*'])) {
+            return;
+        }
+        
         Yii::$app->i18n->translations['extension/yii2-news/*'] = [
             'class' => 'yii\i18n\PhpMessageSource',
-            'sourceLanguage' => $this->sourceLanguage,
+            'sourceLanguage' => 'en-US',
             'basePath' => '@vendor/zakharov-andrew/yii2-news/src/messages',
             'on missingTranslation' => ['app\components\TranslationEventHandler', 'handleMissingTranslation'],
             'fileMap' => [
@@ -90,6 +95,8 @@ class Module extends \yii\base\Module
      */
     public static function t($message, $params = [], $language = null)
     {
+        static::registerTranslations();
+        
         $category = 'news';
         return Yii::t('extension/yii2-news/' . $category, $message, $params, $language);
     }
