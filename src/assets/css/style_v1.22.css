@@ -134,6 +134,7 @@
 }
 .reaction:hover {
     background: rgba(199, 202, 214, .4);
+    text-decoration:none;
 }
 .reaction_selected, .reaction_selected:hover {
     background: #ff2323;
