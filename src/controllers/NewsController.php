@@ -10,7 +10,6 @@ use ZakharovAndrew\news\models\Comment;
 use ZakharovAndrew\news\models\Category;
 use ZakharovAndrew\user\models\Roles;
 use yii\data\Pagination;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\helpers\Url;
 
@@ -19,15 +18,18 @@ use yii\helpers\Url;
  * 
  * @author Andrew Zakharov https://github.com/ZakharovAndrew
  */
-class NewsController extends Controller
+class NewsController extends \ZakharovAndrew\user\controllers\ParentController
 {
+    
+    public $auth_access_actions = ['index', 'view'];
+            
     /**
      * Lists all News models.
      *
      * @return string
      */
     public function actionIndex($category = null)
-    {
+    {        
         // admin and news editor has access
         if (\Yii::$app->user->identity->hasRole(['admin', 'news_editor'])) {
             $query = News::find()->orderBy(['created_at' => SORT_DESC]);
@@ -196,7 +198,7 @@ class NewsController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
-    {
+    {        
         if (($model = News::findOne(['id' => $id])) !== null) {
             
             // the author has access to the news
